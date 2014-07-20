@@ -3,7 +3,8 @@
 *mygo 助手类
 **/
 class mygoExtHelper{
-
+	
+	//对象转数组
 	public static function objToArr($obj){
 	    if(is_object($obj)) {
 	        $obj = (array)$obj;
@@ -16,6 +17,7 @@ class mygoExtHelper{
 	    return $obj;
 	}
 
+	//数组转对象
 	public static function arrToObj($arr){
 		if(is_array($arr)){
 			$arr = (object) $arr;
@@ -26,14 +28,6 @@ class mygoExtHelper{
 			}
 		}
 		return $arr;
-	}
-
-	public static function xmlToObj($xmlString){
-		return simplexml_load_string($xmlString);
-	}
-	
-	public static function xmlToArr($xml){
-		return self::objToArr(simplexml_load_string($xmlString));
 	}
 }
 ?>

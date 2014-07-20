@@ -30,8 +30,8 @@ abstract class mygoController {
     }
 
     protected function forward($controller,$action='index'){
-    	$className = "controller".ucfirst($controller);
-    	$action = "action".ucfirst($action);
+    	$className = $controller."Controller";
+    	$action = $action."Action";
     	$controller = new $className();
     	if($controller && $action){
     		$func = array($controller,$action);
@@ -63,6 +63,10 @@ abstract class mygoController {
 
 	protected function json($status=1,$info='',$data='',$header=true){
 		return mygoResponse::json($status,$info,$data,$header);
+	}
+	
+	protected function xml($xml,$header=true){
+		return mygoResponse::xml($xml,$header);
 	}
 
     public function __set($key, $value = null){

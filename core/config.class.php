@@ -20,7 +20,10 @@ class mygoConfig {
 		if(!file_exists($configPath)){
 			$configPath = PRJDIR.DIRECTORY_SEPARATOR."config".DIRECTORY_SEPARATOR.$name.".".$runEnv.".conf.php";		
 		}
-		$config = self::loadConfig($configPath);
+		if(file_exists($configPath)){
+			$config = self::loadConfig($configPath);	
+		}
+		
 		return $config;
 	}
 

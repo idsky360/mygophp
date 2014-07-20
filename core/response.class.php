@@ -23,5 +23,13 @@ class mygoResponse{
         echo json_encode($jsonData);
         exit();
     }
+    public static function xml($xml,$header=true){
+        if($header){
+            header("Content-Type:application/xml;charset=UTF-8");
+        }
+        ob_clean();
+        echo $xml;
+        exit();
+    }
 }
 ?>
