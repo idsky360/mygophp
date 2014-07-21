@@ -36,7 +36,7 @@ class mygoExtHelper{
 	public static function parseXml($xmlStr,$attribute=false){
 		$xmlObj = simplexml_load_string($xmlStr,'SimpleXMLElement',LIBXML_NOCDATA);
 		$xmlArr = self::objToArr($xmlObj);
-		foreach($xmlArr as $k=$v){
+		foreach($xmlArr as $k=>$v){
 			if(empty($v)){
 				unset($xmlArr[$k]);
 			}
