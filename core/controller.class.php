@@ -26,8 +26,8 @@ abstract class mygoController {
 		return mygoRequest::post($key,$default);
 	}
 
-	protected function input(){
-		return mygoRequest::input();
+	protected function input($parse=false){
+		return mygoRequest::input($parse);
 	}
 
     protected function redirect($url, $code = 302){

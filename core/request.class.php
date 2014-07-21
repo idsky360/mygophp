@@ -51,8 +51,12 @@ class mygoRequest{
 	}
 
 	//获取input数据
-	public static function input(){
-		parse_str(file_get_contents('php://input'), $input);
+	public static function input($parse=false){
+		$input =  file_get_contents('php://input','r');
+		if($parse){
+			parse_str($input, $inputArr);
+			return $inputArr;
+		}
 		return $input;
 	}
 
