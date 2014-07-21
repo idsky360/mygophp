@@ -1,7 +1,8 @@
 <?php
 	/*
 	*图片处理类
-	*@author idsky<idsky360>
+	*@copyright 2014 http://idsky.net
+	*@author idsky<idsky360@gmail.com>
 	**/
 class mygoExtImageDriver{
 

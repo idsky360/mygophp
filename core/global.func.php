@@ -1,6 +1,8 @@
 <?php
 /*
 *mygo全局函数
+*@copyright 2014 http://idsky.net
+*@author idsky<idsky360@gmail.com>
 */
 
 //创建model对象方法

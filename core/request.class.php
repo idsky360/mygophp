@@ -1,7 +1,8 @@
 <?php
 /*
 *request 相关类
-*@author idsky<idsky360@163.com>
+@copyright 2014 http://idsky.net
+*@author idsky<idsky360@gmail.com>
 */
 class mygoRequest{
 	
@@ -47,6 +48,12 @@ class mygoRequest{
 			return $_POST;
 		}
 		return $_POST[$key] ? $_POST[$key] : $default;
+	}
+
+	//获取input数据
+	public static function input(){
+		parse_str(file_get_contents('php://input'), $input);
+		return $input;
 	}
 
 	//获取所有请求参数

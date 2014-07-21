@@ -1,7 +1,8 @@
 <?php
 /*
-*挂件类
-*@author idsky<idsky360@163.com>
+*挂件 基类
+*@copyright 2014 http://idsky.net
+*@author idsky<idsky360@gmail.com>
 **/
 abstract class mygoWidget extends mygoController{
 	

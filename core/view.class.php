@@ -1,7 +1,8 @@
 <?php
 /*
 *view 层代码
-*@author idsky<idsky360@163.com>
+*@copyright 2014 http://idsky.net
+*@author idsky<idsky360@gmail.com>
 */
 class mygoView{
 

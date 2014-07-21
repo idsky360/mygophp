@@ -1,7 +1,8 @@
 <?php
 /*
 *mygo路由类
-*@author idsky<idsky360@163.com>
+*@copyright 2014 http://idsky.net
+*@author idsky<idsky360@gmail.com>
 */
 class mygoRouter {
 

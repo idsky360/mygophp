@@ -1,7 +1,8 @@
 <?php
 /*
 *数据库 mysql驱动类
-*@author idsky<idsky360@163.com>
+*@copyright 2014 http://idsky.net
+*@author idsky<idsky360@gmail.com>
 */
 include_once('sqlBuilder.class.php');
 class mygoExtMysqlDriver {
@@ -83,7 +84,23 @@ class mygoExtMysqlDriver {
     private function initConnect($database='',$master=true){
         if($this->isMasterSlave){
             $_connectType = $master ? 'master' : 'slave';
-            $_dbConfig = $this->config[$_connectType];
+            if($_connectType=='slave'){
+                //多从
+                $isMultiple ＝ 0；
+                foreach($this->config[$_connectType] as $val){
+                    if(is_array($val)){
+                        $isMultiple ＝ 1；
+                        break;
+                    }
+                    break;
+                }
+            }
+            if($_connectType=='slave' && $isMultiple){
+                $rand = rand(0,count($this->config[$_connectType])-1);
+                $_dbConfig = $this->config[$_connectType][$rand];
+            }else{
+                $_dbConfig = $this->config[$_connectType];
+            }
         }else{
             $_connectType = 'single';
             $_dbConfig = $this->config;

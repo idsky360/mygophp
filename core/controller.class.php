@@ -1,7 +1,8 @@
 <?php
 /*
 *controller 基类
-*@author idsky<idsky360@163.com>
+*@copyright 2014 http://idsky.net
+*@author idsky<idsky360@gmail.com>
 **/
 abstract class mygoController {
 	protected $title;
@@ -23,6 +24,10 @@ abstract class mygoController {
 
 	protected function post($key,$default=''){
 		return mygoRequest::post($key,$default);
+	}
+
+	protected function input(){
+		return mygoRequest::input();
 	}
 
     protected function redirect($url, $code = 302){

@@ -1,7 +1,8 @@
 <?php
 /*
 *redis 驱动类
-*@author idsky<idsky360@163.c0m>
+*@copyright 2014 http://idsky.net
+*@author idsky<idsky360@gmail.com>
 **/
 class mygoExtRedisDriver{
 
