@@ -4,7 +4,7 @@
 *@copyright 2014 http://idsky.net
 *@author idsky<idsky360@gmail.com>
 */
-class mygoResponse{
+class Response{
 
 	public static function redirect($url, $code = 302)
     {

@@ -4,7 +4,7 @@
 *@copyright 2014 http://idsky.net
 *@author idsky<idsky360@gmail.com>
 */
-class mygoExtImageImagick{
+class ImageImagick{
 
 	private $image;
 	private $info;

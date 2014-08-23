@@ -4,14 +4,14 @@
 *@copyright 2014 http://idsky.net
 *@author idsky<idsky360@gmail.com>
 */
-class mygoView{
+class MygoView{
 
 	protected $viewHome = '';
-	protected $tplExt = ".tpl.php";
+	protected $tplExt = ".tpl.html";
 
 	public function __construct($viewHome){
 		if(is_null($viewHome)){
-			$this->viewHome=PRJDIR.DIRECTORY_SEPARATOR."view";
+			$this->viewHome=PRJDIR.'/modules/'.mygo::$dispatchInfo['module']."/view";
 		}else{
 			$this->viewHome= $viewHome;
 		}
@@ -39,9 +39,7 @@ class mygoView{
 	}
 
 	public function defaultTemplate(){
-		$dispatchInfo = mygo::getDispatchInfo();
-		$default = lcfirst(str_replace('Controller','',$dispatchInfo['controller'])).DIRECTORY_SEPARATOR.
-		lcfirst(str_replace('Action','',$dispatchInfo['action']));
+		$default = mygo::$controller.'/'.mygo::$action;
 		return $default;
 	}
 

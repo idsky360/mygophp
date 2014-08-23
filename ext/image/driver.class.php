@@ -4,7 +4,7 @@
 	*@copyright 2014 http://idsky.net
 	*@author idsky<idsky360@gmail.com>
 	**/
-class mygoExtImageDriver{
+class ImageDriver{
 
 	const IMAGE_IMAGICK         =   1; //常量，标识imagick库类型 默认
 	//const IMAGE_GD              =   2; //常量，标识GD库类型 暂不支持

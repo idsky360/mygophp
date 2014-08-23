@@ -4,25 +4,29 @@
 *@copyright 2014 http://idsky.net
 *@author idsky<idsky360@gmail.com>
 */
-class mygoRouter {
+class MygoRouter {
 
 	public function __construct(){
 
 	}
 
 	public  $defaultAutoRouter = array(
-		'controller'=>'indexController',
-		'action'=>'indexAction',
+		'module'=>'home',
+		'controller'=>'index',
+		'action'=>'index',
 	);
 	public  $enableAutoMatch = true;
 	
  	public  function autoMatch($requestPath){
  		$dispathInfo = $this->defaultAutoRouter;
  		$patchArr = explode('/', $requestPath);
- 		if($controller=current($patchArr)){
+ 		if($module=current($patchArr)){
+ 			$dispathInfo['module'] = $module;
+ 		}
+ 		if($controller = next($patchArr)){
  			$dispathInfo['controller'] = $controller;
  		}
- 		if($action=next($patchArr)){
+ 		if($action = next($patchArr)){
  			$dispathInfo['action'] = $action;
  		}
 
@@ -30,12 +34,12 @@ class mygoRouter {
  		while (false!==($next = next($patchArr))) {
  			$params[$next] = urldecode(next($patchArr));
  		}
- 		mygoRequest::setParams($params);
+ 		Request::setParams($params);
  		return $dispathInfo;
  	}
 
  	public function match($rules=null){
- 		$requestPath = mygoRequest::getRequestPath();
+ 		$requestPath = Request::getRequestPath();
  		if($rules){
 	 		foreach ($rules as $regex => $rule) {
 	 			if(!preg_match($regex, $requestPath,$matches)){
@@ -51,11 +55,19 @@ class mygoRouter {
 	 						$params += $rule['defaults'];
 	 					}
 	 				}
-	 				mygoRequest::setParams($params);
+	 				Request::setParams($params);
 	 			}
-	 			if(isset($rule['controller'])) $rule['controller'] = $rule['controller'].'Controller';
-	 			if(isset($rule['action'])) $rule['action'] = $rule['action'].'Action';
-	 			return $rule;
+	 			if(isset($rule['module'])){
+	 				$dispathInfo['module'] = $rule['module'];
+	 			}
+	 			if(isset($rule['controller'])){
+	 				$dispathInfo['controller'] = $rule['controller'];
+	 			}
+	 			if(isset($rule['action'])) {
+	 				$dispathInfo['action'] = $rule['action'];
+	 			}
+
+	 			return $dispathInfo;
 	 		}
  		}
 

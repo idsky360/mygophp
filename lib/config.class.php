@@ -4,11 +4,15 @@
 *@copyright 2014 http://idsky.net
 *@author idsky<idsky360@gmail.com>
 **/
-class mygoConfig {
+class Config {
 
 	public static function getRunEnv(){
-		include_once('/etc/env.php');
-		return defined(RUNENV) ? RUNENV : 'development';
+		if($_SERVER['RUN_ENV']){
+			define('RUN_ENV',$_SERVER['RUN_ENV']);
+		}else{
+			include_once('/etc/env.php');
+		}
+		return defined(RUN_ENV) ? RUN_ENV : 'dev';
 	}
 
 	public static function getByName($name){

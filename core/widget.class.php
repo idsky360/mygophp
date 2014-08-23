@@ -4,7 +4,7 @@
 *@copyright 2014 http://idsky.net
 *@author idsky<idsky360@gmail.com>
 **/
-abstract class mygoWidget extends mygoController{
+abstract class MygoWidget extends mygoController{
 	
 	protected $data;
 

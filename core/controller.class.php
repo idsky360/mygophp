@@ -4,7 +4,7 @@
 *@copyright 2014 http://idsky.net
 *@author idsky<idsky360@gmail.com>
 **/
-abstract class mygoController {
+abstract class MygoController {
 	protected $title;
 	protected $keywords;
 	protected $description;
@@ -19,19 +19,19 @@ abstract class mygoController {
 	}
 
 	protected function get($key,$default=''){
-		return mygoRequest::get($key,$default);
+		return Request::get($key,$default);
 	}
 
 	protected function post($key,$default=''){
-		return mygoRequest::post($key,$default);
+		return Request::post($key,$default);
 	}
 
 	protected function input($parse=false){
-		return mygoRequest::input($parse);
+		return Request::input($parse);
 	}
 
     protected function redirect($url, $code = 302){
-        mygoResponse::redirect($url,$code);
+        Response::redirect($url,$code);
     }
 
     protected function forward($controller,$action='index'){
@@ -67,11 +67,11 @@ abstract class mygoController {
 	}
 
 	protected function json($status=1,$info='',$data='',$header=true){
-		return mygoResponse::json($status,$info,$data,$header);
+		return Response::json($status,$info,$data,$header);
 	}
 	
 	protected function xml($xml,$header=true){
-		return mygoResponse::xml($xml,$header);
+		return Response::xml($xml,$header);
 	}
 
     public function __set($key, $value = null){
@@ -87,13 +87,13 @@ abstract class mygoController {
 				return $this->view ?  $this->view : $this->view = $this->view();
 				break;
 			case 'config':
-				return $this->config ? $this->config : $this->config = new mygoConfig();
+				return $this->config ? $this->config : $this->config = new C();
 				break;
 			case 'request':
-				return $this->request ? $this->request : $this->request = new mygoRequest();
+				return $this->request ? $this->request : $this->request = new Request();
 				break;
 			case 'response':
-				return $this->response ? $this->response : $this->response = new mygoResponse();
+				return $this->response ? $this->response : $this->response = new Response();
 				break;
 			default:
 				break;

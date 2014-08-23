@@ -4,7 +4,7 @@
 *@copyright 2014 http://idsky.net
 *@author idsky<idsky360@gmail.com>
 **/
-class mygoExtHelper{
+class Helper{
 	
 	//对象转数组
 	public static function objToArr($obj){

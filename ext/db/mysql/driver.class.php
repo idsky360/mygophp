@@ -5,7 +5,7 @@
 *@author idsky<idsky360@gmail.com>
 */
 include_once('sqlBuilder.class.php');
-class mygoExtMysqlDriver {
+class DbMysqlDriver {
 
     //单例模式实现对象
     protected static $_instance;
@@ -86,10 +86,10 @@ class mygoExtMysqlDriver {
             $_connectType = $master ? 'master' : 'slave';
             if($_connectType=='slave'){
                 //多从
-                $isMultiple ＝ 0；
+                $isMultiple = 0；
                 foreach($this->config[$_connectType] as $val){
                     if(is_array($val)){
-                        $isMultiple ＝ 1；
+                        $isMultiple = 1;
                         break;
                     }
                     break;

@@ -6,18 +6,14 @@
 **/
 
 defined('MYGODIR') || define('MYGODIR', dirname(__FILE__));
-$auloadPath = MYGODIR.DIRECTORY_SEPARATOR.core.DIRECTORY_SEPARATOR.'autoload.class.php';
-$globalFuncPath = MYGODIR.DIRECTORY_SEPARATOR.core.DIRECTORY_SEPARATOR.'global.func.php';
-include_once($auloadPath);
-include_once($globalFuncPath);
+include_once (MYGODIR.'/lib/global.func.php');
+class Mygo{
 
-class mygo{
-
+	public static $dispatchInfo;
 	private static $_instance;
-	private static $routeConfigKey='route';
-
 	public function __construct(){
-		mygoAutoload::register();	
+		self::importCore();
+		MygoAutoload::register();	
 	}
 
 	public static function getInstance(){
@@ -33,35 +29,24 @@ class mygo{
 		if(!self::$_instance){
 			self::getInstance();
 		}
-		//别名
-		class_alias(mygoModel,model);
-		class_alias(mygoController,controller);
-		class_alias(mygoWidget,widget);
-		
-		//配置管理类
-		class_alias(mygoConfig,C);
-		//助手类
-		class_alias(mygoExtHelper,H);
-
+		//设置别名
+		self::alias();
 	}
 
 	public static function run(){
 		self::init();
-		$rules = mygoConfig::getByName(self::$routeConfigKey);
-		$router = new mygoRouter();
-		$dispatchInfo = $router->match($rules);
-		
-		if($dispatchInfo['controller']){
-			$className = $dispatchInfo['controller'];
-			$controller = new $className();
+		self::getDispatchInfo();
+		if(self::$dispatchInfo['module'] && self::$dispatchInfo['controller']){
+			$className = self::$dispatchInfo['module'].ucfirst(self::$dispatchInfo['controller']).'Controller';
+			$object = new $className();
 		}
-		if($dispatchInfo['action']){
-			$action = $dispatchInfo['action'];
+		if(self::$dispatchInfo['action']){
+			$func = self::$dispatchInfo['action'].'Action';
 		}
-		if($controller && $action){
+
+		if($object && $func){
 			try {
-				$func = array($controller,$action);
-				call_user_func($func);	
+				call_user_func(array($object,$func));
 			} catch (Exception $e) {
 				print_r($e->getmessage());
 				exit;
@@ -71,12 +56,35 @@ class mygo{
 		}
 	}
 
+	//get dispatchInfo
 	public static function getDispatchInfo(){
-		$rules = mygoConfig::getByName(self::$routeConfigKey);
+		$rules = C::getByName('route');
 		$router = new mygoRouter();
-		$dispatchInfo = $router->match($rules);
-		return $dispatchInfo;
+		self::$dispatchInfo = $router->match($rules);
+		return self::$dispatchInfo;
 	}
+
+	private static function alias(){
+		class_alias(MygoModel,model);
+		class_alias(MygoController,controller);
+		class_alias(MygoWidget,widget);
+		
+		//配置管理类
+		class_alias(Config,C);
+		//助手类
+		class_alias(Helper,H);
+	}
+
+	private static  function importCore(){
+		LOAD(MYGODIR.'/lib/config.class.php');
+		LOAD(MYGODIR.'/core/autoload.class.php');
+		LOAD(MYGODIR.'/core/router.class.php');
+		LOAD(MYGODIR.'/core/model.class.php');
+		LOAD(MYGODIR.'/core/controller.class.php');
+		LOAD(MYGODIR.'/core/view.class.php');
+		LOAD(MYGODIR.'/core/widget.class.php');
+	}
+
 }
 
 ?>

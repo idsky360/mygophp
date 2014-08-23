@@ -4,7 +4,7 @@
 *@copyright 2014 http://idsky.net
 *@author idsky<idsky360@gmail.com>
 */
-abstract class mygoModel {
+abstract class MygoModel {
 	//mysql 对象
 	private $mysql;
 	private $redis;
