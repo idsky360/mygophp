@@ -18,16 +18,16 @@ class MygoRouter {
 	public  $enableAutoMatch = true;
 	
  	public  function autoMatch($requestPath){
- 		$dispathInfo = $this->defaultAutoRouter;
+ 		$dispatchInfo = $this->defaultAutoRouter;
  		$patchArr = explode('/', $requestPath);
  		if($module=current($patchArr)){
- 			$dispathInfo['module'] = $module;
+ 			$dispatchInfo['module'] = $module;
  		}
  		if($controller = next($patchArr)){
- 			$dispathInfo['controller'] = $controller;
+ 			$dispatchInfo['controller'] = $controller;
  		}
  		if($action = next($patchArr)){
- 			$dispathInfo['action'] = $action;
+ 			$dispatchInfo['action'] = $action;
  		}
 
  		$params = array();
@@ -35,7 +35,7 @@ class MygoRouter {
  			$params[$next] = urldecode(next($patchArr));
  		}
  		Request::setParams($params);
- 		return $dispathInfo;
+ 		return $dispatchInfo;
  	}
 
  	public function match($rules=null){
@@ -58,16 +58,15 @@ class MygoRouter {
 	 				Request::setParams($params);
 	 			}
 	 			if(isset($rule['module'])){
-	 				$dispathInfo['module'] = $rule['module'];
+	 				$dispatchInfo['module'] = $rule['module'];
 	 			}
 	 			if(isset($rule['controller'])){
-	 				$dispathInfo['controller'] = $rule['controller'];
+	 				$dispatchInfo['controller'] = $rule['controller'];
 	 			}
 	 			if(isset($rule['action'])) {
-	 				$dispathInfo['action'] = $rule['action'];
+	 				$dispatchInfo['action'] = $rule['action'];
 	 			}
-
-	 			return $dispathInfo;
+	 			return $dispatchInfo;
 	 		}
  		}
 

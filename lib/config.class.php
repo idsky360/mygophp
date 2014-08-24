@@ -21,14 +21,13 @@ class Config {
 			return self::loadConfig($MYGODATA['config'][$name]);
 		}
 		$runEnv = self::getRunEnv();
-		$configPath = PRJDIR.DIRECTORY_SEPARATOR."config".DIRECTORY_SEPARATOR.$name.".conf.php";		
+		$configPath = PRJDIR."/config/".$name.".conf.php";		
 		if(!file_exists($configPath)){
-			$configPath = PRJDIR.DIRECTORY_SEPARATOR."config".DIRECTORY_SEPARATOR.$name.".".$runEnv.".conf.php";		
+			$configPath = PRJDIR."/config/".$runEnv.'/'.str_replace('.','/',$name).".conf.php";		
 		}
 		if(file_exists($configPath)){
 			$config = self::loadConfig($configPath);	
 		}
-		
 		return $config;
 	}
 
@@ -36,8 +35,8 @@ class Config {
 	public static function getByKey($key){
 		$config = array();
 		$_array = explode('.',$key);
-		$_name = $_array[0];
-		$_key = $_array[1];
+		$_key = array_pop($_array);
+		$_name = implode('/',$_array);
 		$allConfig = self::getByName($_name);
 		if($allConfig && $allConfig[$_key]){
 			$config = $allConfig[$_key];

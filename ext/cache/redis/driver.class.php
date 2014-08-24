@@ -11,9 +11,6 @@ class CacheRedisDriver{
 	protected $redis;
 
 	public function __construct($config=null){
-		if(!$config){
-			$config = mygoConfig::getByKey('common.redis');
-		}
 		$this->config = $config;
 		$this->connect();
 	}

@@ -35,9 +35,9 @@ class Mygo{
 
 	public static function run(){
 		self::init();
-		self::getDispatchInfo();
+		self::getdispatchInfo();
 		if(self::$dispatchInfo['module'] && self::$dispatchInfo['controller']){
-			$className = self::$dispatchInfo['module'].ucfirst(self::$dispatchInfo['controller']).'Controller';
+			$className = ucfirst(self::$dispatchInfo['module']).ucfirst(self::$dispatchInfo['controller']).'Controller';
 			$object = new $className();
 		}
 		if(self::$dispatchInfo['action']){
@@ -57,7 +57,7 @@ class Mygo{
 	}
 
 	//get dispatchInfo
-	public static function getDispatchInfo(){
+	public static function getdispatchInfo(){
 		$rules = C::getByName('route');
 		$router = new mygoRouter();
 		self::$dispatchInfo = $router->match($rules);

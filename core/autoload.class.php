@@ -19,11 +19,13 @@ class MygoAutoload{
 		
 		//加载Controller类
 		if(substr($className,-10)==='Controller'){
-			$arr = preg_split("/(?=[A-Z])/",str_replace('Controller','',$className)); 
+			$arr = preg_split("/(?=[A-Z])/",str_replace('Controller','',$className));
+			array_shift($arr); 
 			$classFile = PRJDIR.'/modules/'.strtolower(current($arr)).'/controller/'.strtolower(end($arr)).'.class.php';
 		//加载Model类
 		}else if(substr($className,-5)==='Model'){
-			$arr = preg_split("/(?=[A-Z])/",str_replace('Model','',$className)); 
+			$arr = preg_split("/(?=[A-Z])/",str_replace('Model','',$className));
+			array_shift($arr);
 			$classFile = PRJDIR.'/modules/'.strtolower(current($arr)).'/model/'.strtolower(end($arr)).'.class.php';
 		//加载Widget类 TODO
 		/*
@@ -48,7 +50,8 @@ class MygoAutoload{
 					$autoloadMap = array_merge($autoloadMap,$autoloadConfig);
 				}
 				foreach ($autoloadMap as $path){
-					$classFile = rtrim($path,'/').'/'.strtolower(preg_replace('/((?<=[a-z])(?=[A-Z]))/',DIRECTORY_SEPARATOR, $className)).'.class.php';
+					$classFile = rtrim($path,'/').'/'.strtolower(preg_replace('/(?=[A-Z])/','/', $className)).'.class.php';
+					//var_dump($classFile);
 					if(file_exists($classFile)) break;
 				}		
 			}

@@ -39,7 +39,7 @@ class MygoView{
 	}
 
 	public function defaultTemplate(){
-		$default = mygo::$controller.'/'.mygo::$action;
+		$default = mygo::$dispatchInfo['controller'].'/'.mygo::$dispatchInfo['action'];
 		return $default;
 	}
 

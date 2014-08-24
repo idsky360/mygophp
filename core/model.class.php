@@ -13,12 +13,14 @@ abstract class MygoModel {
 
 	}
 
-	public function mysql($config=null){
-		return $this->mysql = mygoExtMysqlDriver::getInstance($config);
+	public function mysql(){
+		$mysqlConfig = C::getByname('mysql');
+		return $this->mysql = DbMysqlDriver::getInstance($mysqlConfig);
 	}
 
 	public function redis($config=null){
-		return $this->redis = new mygoExtRedisDriver($config);
+		$redisConfig = C::getByname('redis');
+		return $this->redis = new CacheRedisDriver($redisConfig);
 	}
 
 	public function __set($key, $value = null){

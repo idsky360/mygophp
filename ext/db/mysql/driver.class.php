@@ -46,14 +46,8 @@ class DbMysqlDriver {
     //构造函数
 	public function __construct($config=''){
         $this->sqlBuilder = new sqlBuilder();
-        if(!$config){
-            $this->config = mygoConfig::getByKey('common.mysql');
-            if($this->config['master'] && $this->config['slave']){
-                $this->isMasterSlave = true;
-            }
-        }else{
+        if($config){
             $this->config = $config;
-            $this->initConnect();
         }
 	}
 
@@ -82,36 +76,34 @@ class DbMysqlDriver {
 
     //初始化数据库链接
     private function initConnect($database='',$master=true){
+        if($this->config[$database]['master'] && $this->config[$database]['slave']){
+            $this->isMasterSlave = true;
+        }
         if($this->isMasterSlave){
             $_connectType = $master ? 'master' : 'slave';
             if($_connectType=='slave'){
                 //多从
-                $isMultiple = 0；
-                foreach($this->config[$_connectType] as $val){
-                    if(is_array($val)){
-                        $isMultiple = 1;
-                        break;
-                    }
-                    break;
+                $isMultiple = 0;
+                if(is_array(current($this->config[$database][$_connectType]))){
+                    $isMultiple = 1;
                 }
             }
             if($_connectType=='slave' && $isMultiple){
-                $rand = rand(0,count($this->config[$_connectType])-1);
-                $_dbConfig = $this->config[$_connectType][$rand];
+                $rand = rand(0,count($this->config[$database][$_connectType])-1);
+                $_dbConfig = $this->config[$database][$_connectType][$rand];
             }else{
-                $_dbConfig = $this->config[$_connectType];
+                $_dbConfig = $this->config[$database][$_connectType];
             }
         }else{
             $_connectType = 'single';
-            $_dbConfig = $this->config;
+            $_dbConfig = $this->config[$database];
         }
-        if(!$this->connections[$_connectType] && !mysql_ping($this->connections[$_connectType])){
-            $this->connections[$_connectType] = $this->connect($_dbConfig);
+        if(!$this->connections[$database][$_connectType] || !mysql_ping($this->connections[$database][$_connectType])){
+            $this->connections[$database][$_connectType] = $this->connect($_dbConfig);
         }
-        $database = $database ? $database : $_dbConfig['database'];
         $charset = $_dbConfig['charset'] ? $_dbConfig['charset'] : 'UTF8';
-        $this->selectDb($database,$this->connections[$_connectType],$charset);
-        return $this->dbLink = $this->connections[$_connectType];
+        $this->selectDb($database,$this->connections[$database][$_connectType],$charset);
+        return $this->dbLink = $this->connections[$database][$_connectType];
     }
 
     //选择数据库
@@ -139,7 +131,6 @@ class DbMysqlDriver {
 
     //执行sql 自动判断主从 $MS 强制指定主从  master slave
     public function dosql($sql,$database='',$MS=''){
-
         $master = false;
         if($this->isMasterSlave){
             if(!$MS){
@@ -150,6 +141,10 @@ class DbMysqlDriver {
             }
             
         }
+        if(!$database){
+    		$keys = array_keys($this->config);
+    		$database = current($keys);
+    	}
         $this->initConnect($database,$master);
         $result = $this->_exec($sql);
         if($result){
@@ -161,6 +156,10 @@ class DbMysqlDriver {
 
     //执行查询语句
     public function query($sql,$database=''){
+    	if(!$database){
+    		$keys = array_keys($this->config);
+    		$database = current($keys);
+    	}
         $this->initConnect($database,false);
         $result = $this->_exec($sql);
         if($result){
@@ -171,6 +170,10 @@ class DbMysqlDriver {
 
     //执行sql语句
     public function exec($sql,$database=''){
+    	if(!$database){
+    		$keys = array_keys($this->config);
+    		$database = current($keys);
+    	}
         $this->initConnect($database,true);
         $result = $this->_exec($sql);
         if($result){
