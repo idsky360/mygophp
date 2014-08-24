@@ -68,10 +68,8 @@ class Mygo{
 		class_alias(MygoModel,model);
 		class_alias(MygoController,controller);
 		class_alias(MygoWidget,widget);
-		
 		//配置管理类
 		class_alias(Config,C);
-		//助手类
 		class_alias(Helper,H);
 	}
 
