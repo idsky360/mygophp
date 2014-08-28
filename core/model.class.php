@@ -14,12 +14,15 @@ abstract class MygoModel {
 	}
 
 	public function mysql(){
-		$mysqlConfig = C::getByname('mysql');
-		return $this->mysql = DbMysqlDriver::getInstance($mysqlConfig);
+		$mysqlConfig = C::getByName('mysql');
+		$adapter = C::getByKey('common.db_adapter') ? C::getByKey('common.db_adapter') : 'pdo';
+		if(empty($adapter)) $adapter = 'pdo';
+		$dbDriver = "Db".ucfirst($adapter);
+		return $this->mysql = $dbDriver::getInstance($mysqlConfig);
 	}
 
 	public function redis($config=null){
-		$redisConfig = C::getByname('redis');
+		$redisConfig = C::getByName('redis');
 		return $this->redis = new CacheRedisDriver($redisConfig);
 	}
 

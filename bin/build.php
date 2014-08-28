@@ -83,7 +83,8 @@ return array(
 ';
 $proContents = '<?php
 return array(
-	"debug"=>false;
+	"debug"=>false,
+	"db_adapter"=>"pdo",//数据库适配 mysql mysqli pdo
 );
 ';
 	$commonFiles = array(
