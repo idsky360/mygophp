@@ -48,11 +48,19 @@ class Mygo{
 			try {
 				call_user_func(array($object,$func));
 			} catch (Exception $e) {
-				print_r($e->getmessage());
+				$error = $e->getFile()." on line ".$e->getLine()." ".$e->getMessage()." ";
+				$error .= $e->getTraceAsString();
+				$debug = C::getByKey("common.debug",false);
+				if($debug){
+					print_r($error);	
+				}else{
+					Log::record($error,"error");
+					header("Content-type: text/html; charset=utf-8",false,500);
+				}
 				exit;
 			}
 		}else{
-			throw new Exception('controller or action is not exit');
+			//TODO 404
 		}
 	}
 
@@ -84,5 +92,4 @@ class Mygo{
 	}
 
 }
-
 ?>

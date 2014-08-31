@@ -98,6 +98,6 @@ class DbMysqli extends DbAbstract
     protected function error(){
         $this->sqlError = $this->dbLink->errno.':'.$this->dbLink->error;
         $this->sqlError .="\r\n sql:".$this->sql;
-        exit($this->sqlError);
+        throw new Exception($this->sqlError);
     }
 }

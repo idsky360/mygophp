@@ -15,7 +15,7 @@ class DbMysql extends DbAbstract {
     protected function connect(){
         $con = @mysql_connect($this->_dbConfig['host'].':'.$this->_dbConfig['port'],$this->_dbConfig['username'],$this->_dbConfig['password']);
         if(!$con){
-            exit('mysql connect error!'); //TODO
+            throw new Exception('mysql connect error!'); 
         }
         $charset = $this->_dbConfig['charset'] ? $this->_dbConfig['charset'] : 'UTF8';
         mysql_set_charset(strtoupper($charset),$con);
@@ -112,7 +112,7 @@ class DbMysql extends DbAbstract {
     protected function error(){
         $this->sqlError = mysql_errno().':'.mysql_error($this->dbLink);
         $this->sqlError .="\r\n sql:".$this->sql;
-        exit($this->sqlError);
+        throw new Exception($this->sqlError);
     }
 }
 ?>

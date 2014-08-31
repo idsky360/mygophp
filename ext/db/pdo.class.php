@@ -9,10 +9,7 @@ class DbPdo extends DbAbstract{
         $this->_dbConfig['charset'] = $this->_dbConfig['charset'] ? $this->_dbConfig['charset'] : 'UTF8';
         $dsn = 'mysql:host='.$this->_dbConfig['host'].';port='.$this->_dbConfig['port'].';';
         $dsn .= 'dbname='.$this->database.';charset='.$this->_dbConfig['charset'];
-    	$con = new PDO($dsn, $this->_dbConfig['user'], $this->_dbConfig['password']);
-        if(!$con){
-            exit('mysql connect error!'); //TODO
-        }
+    	$con = new PDO($dsn,$this->_dbConfig['username'],$this->_dbConfig['password']);
         return $con;
     }
 
@@ -94,8 +91,9 @@ class DbPdo extends DbAbstract{
     }
 
     public function error(){
-        $this->sqlError = $this->execResult->errorCode().':'.$this->execResult->errorInfo();
-        $this->sqlError .="\r\n sql:".$this->sql;
-        exit($this->sqlError);
+        $errorInfo = $this->dbLink->errorInfo();
+        $this->sqlError = $errorInfo[1].":".$errorInfo[2]."\r\n";
+        $this->sqlError .=" sql:".$this->sql;
+        throw new Exception($this->sqlError);
     }
 }

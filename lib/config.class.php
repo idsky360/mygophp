@@ -32,7 +32,7 @@ class Config {
 	}
 
 	//$key  文件名.配置项  例  'common.mysql'
-	public static function getByKey($key){
+	public static function getByKey($key,$default=null){
 		$config = array();
 		$_array = explode('.',$key);
 		$_key = array_pop($_array);
@@ -41,7 +41,7 @@ class Config {
 		if($allConfig && $allConfig[$_key]){
 			$config = $allConfig[$_key];
 		}
-		return $config;
+		return $config ? $config : $default;
 	}
 
 	public static function loadConfig($configPath){
