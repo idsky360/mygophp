@@ -74,17 +74,22 @@ function _buildCommonConfig(){
 $devContents = '<?php
 return array(
 	"debug"=>true,
+	"db_adapter"=>"pdo",//数据库适配 mysql mysqli pdo
+	"log_path"=>"/tmp",
 );
 ';
 $qaContents = '<?php
 return array(
 	"debug"=>true,
+	"db_adapter"=>"pdo",//数据库适配 mysql mysqli pdo
+	"log_path"=>"/tmp",
 );
 ';
 $proContents = '<?php
 return array(
 	"debug"=>false,
 	"db_adapter"=>"pdo",//数据库适配 mysql mysqli pdo
+	"log_path"=>"/tmp",
 );
 ';
 	$commonFiles = array(
